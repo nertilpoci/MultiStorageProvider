@@ -26,14 +26,14 @@ namespace AzureStorageService.Service.Implementation
         /// <param name="storageAccount">Storage account info</param>
         /// <param name="containerName">The share to peform actions</param>
         /// <param name="baseDirectory">Directory from where to start browsing</param>
-        public BlobShareProvider(CloudStorageAccount storageAccount, string containerName,string baseDirecotry="")
+        public BlobShareProvider(CloudStorageAccount storageAccount, string containerName,string baseDirecotry="",bool createContainerIfNoExists=false)
         {
             this.storageAccount = storageAccount;// CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
             this.bloblClient = storageAccount.CreateCloudBlobClient();
             container = bloblClient.GetContainerReference(containerName);
-            directory= container.GetDirectoryReference(baseDirecotry);
-            //AsyncHelper.RunSync(async () => await this.container.CreateIfNotExistsAsync());     
+            if(createContainerIfNoExists) AsyncHelper.RunSync(async () => await this.container.CreateIfNotExistsAsync());     
+            directory = container.GetDirectoryReference(baseDirecotry??"");
         }
 
 

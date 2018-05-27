@@ -21,5 +21,7 @@ namespace AzureStorageService.Service.Interface
         Task<bool> RenameFile(string originalName, string newName, bool overrideIfExists = false);
         Task<bool> UpdateFile(Stream stream, string name);
         Task<bool> UpdateFile(string fileName, string name);
+
+
     }
 }

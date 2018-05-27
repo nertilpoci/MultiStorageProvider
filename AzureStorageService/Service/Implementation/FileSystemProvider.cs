@@ -66,7 +66,9 @@ namespace AzureStorageService.Service.Implementation
             try
             {
                 if (File.Exists(MapPath(name)) && !overrideIfExists) return true; //if file exist and not set to override return success
-                using (var fileStream = File.OpenWrite(MapPath(name)))
+                var path = new FileInfo(MapPath(name));
+                path.Directory.Create();
+                using (var fileStream =path.Open(FileMode.Create))
                 {
                   await  fileStream.WriteAsync(bytes,0,bytes.Length-1);
                 }
@@ -113,7 +115,9 @@ namespace AzureStorageService.Service.Implementation
 
         public async Task DownloadStream(Stream stream, string name)
         {
-            stream = File.Open(MapPath(name), FileMode.Open);
+            var filestream = File.Open(MapPath(name), FileMode.Open,FileAccess.ReadWrite);
+            await filestream.CopyToAsync(stream);
+            filestream.Dispose();
         }
         public async Task<byte[]> DownloadBytes(string name)
         {
