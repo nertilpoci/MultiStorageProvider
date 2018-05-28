@@ -24,12 +24,13 @@ namespace AzureStorageService.Service.Implementation
         /// <param name="storageAccount">Storage account info</param>
         /// <param name="shareName">The share to peform actions</param>
         /// <param name="baseDirectory">Directory from where to start browsing</param>
-        public FileShareProvider(CloudStorageAccount storageAccount, string shareName, string baseDirectory)
+        public FileShareProvider(CloudStorageAccount storageAccount, string shareName, string baseDirectory,bool createIfNotExists)
         {
-            this.storageAccount = storageAccount;// CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            this.storageAccount = storageAccount;
 
             this.fileClient = storageAccount.CreateCloudFileClient();
             var share = fileClient.GetShareReference(shareName);
+            if(createIfNotExists) AsyncHelper.RunSync(async () => await share.CreateIfNotExistsAsync());
             baseDir = share.GetRootDirectoryReference().GetDirectoryReference(baseDirectory);
             AsyncHelper.RunSync(async () => await baseDir.CreateIfNotExistsAsync());     
         }

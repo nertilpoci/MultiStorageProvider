@@ -142,8 +142,8 @@ namespace AzureStorageService.Test
         public async Task DeleteFolderTest(string baseDir)
         {
             BlobShareProvider provider = new BlobShareProvider(CloudStorageAccount.DevelopmentStorageAccount, ContainerName,baseDir);
-            var filename1 ="testfolder/" + Path.GetRandomFileName();
-            var filename2 ="testfolder/" + Path.GetRandomFileName();
+            var filename1 ="testfolder\\" + Path.GetRandomFileName();
+            var filename2 ="testfolder\\" + Path.GetRandomFileName();
             await provider.AddFile(RandomFileGenerator.RandomFileByteArray(1000), filename1);
             await provider.AddFile(RandomFileGenerator.RandomFileByteArray(2000), filename2);
 
