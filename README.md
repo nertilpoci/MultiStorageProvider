@@ -31,3 +31,50 @@ Included also is a LocalFileSystem provider for testing or if the fileshares are
 ````
 
 
+Easily switch between
+
+1. BlobSotrage
+2. FileShare
+3. Local File System
+
+Just swap the implementation you want to use and everything else remains the same.
+
+````
+Blob
+// param1: storage account, pass in the storage account already configured.
+//param2: container name, name of your contianer
+//param3: baseDirectory, a directory to start the operations from. if base directory "baseDir" any request for files will start from //this directory and go down anything above the directory hierarchy won't be found.
+//'basedDir\file1': file1 can be found using just file1 without passing in basedir\file1 if not base dire specified the full path is needed
+//param4: createContainerIfNotExist: if set to true will create container. If account has no permissions exception will be thrown.
+
+var blobProvidernew BlobShareProvider(CloudStorageAccount.DevelopmentStorageAccount, "mycontainer", "baseDir",true);
+
+
+File Share
+// param1: storage account, pass in the storage account already configured.
+//param2: container name, name of your contianer
+//param3: baseDirectory, a directory to start the operations from. if base directory "baseDir" any request for files will start from //this directory and go down anything above the directory hierarchy won't be found.
+//'basedDir\file1': file1 can be found using just file1 without passing in basedir\file1 if not base dire specified the full path is needed
+//param4: createShareIfNotExist: if set to true will create new share. If account has no permissions exception will be thrown.
+
+var fileShareProvider= FileShareProvider(CloudStorageAccount.DevelopmentStorageAccount, "myshare", "baseDir",true);
+
+
+
+Local File System
+// param1: baseDire, if specified the files will be found from base dir and below its hierarchy using relative paths, otherwise the full path needs to be passed in
+
+var localSystemProvider= FileSystemProvider( "baseDir");
+
+
+
+All operations will work the same for each provider, if you want to switch between them only the constructor takes in different parameters, the rest will look the same
+
+
+
+
+````
+
+
+
+
