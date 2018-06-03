@@ -1,10 +1,15 @@
 ![Image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNOVqyYYV7z_gniVmV6PKhucOmEwQMZXb0KXlUhedUzNlNaxLZ)
 
 
-# AzureStorageProvider
+# MultiStorageProvider
 
-Abstraction for Blob and FileShare to easily switch between the two without having to change extra code.
-Included also is a LocalFileSystem provider for testing or if the fileshares are mounted on the local file system
+Abstraction for storage systems. 
+
+Currently incuded:
+
+1. Azure File Storage
+2. Azure Blbog Storage
+3. File System Storage
 
 
 
