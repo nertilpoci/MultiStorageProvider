@@ -67,9 +67,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AzureStorageService\AzureStorageService.csproj">
-      <Project>{0bd7cac8-0211-45df-b90c-90d9106f10a5}</Project>
-      <Name>AzureStorageService</Name>
+    <ProjectReference Include="..\MultiStorageProvider.Azure\MultiStorageProvider.Azure.csproj">
+      <Project>{6a381b97-df0a-403a-b987-d488fcd91482}</Project>
+      <Name>MultiStorageProvider.Azure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MultiStorageProvider.LocalFileSystem\MultiStorageProvider.LocalFileSystem.csproj">
+      <Project>{5e657c6f-59ea-4409-b870-e5fe9f20006b}</Project>
+      <Name>MultiStorageProvider.LocalFileSystem</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

@@ -1,11 +1,12 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AzureStorageService.Service.Implementation;
+using MultiStorageProvider.Service.Implementation;
 using Microsoft.WindowsAzure.Storage;
 using System.Threading.Tasks;
 using System.IO;
+using MultiStorageProvider.Azure.Service.Implementation;
 
-namespace AzureStorageService.Test
+namespace MultiStorageProvider.Test
 {
     [TestClass]
     public class BlobProviderTests

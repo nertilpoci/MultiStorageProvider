@@ -1,17 +1,17 @@
-﻿using AzureStorageService.Service.Interface;
+﻿using MultiStorageProvider.Common.Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureStorageService.Service.Implementation
+namespace MultiStorageProvider.LocalFileSystem.Service.Implementation
 {
     public class FileSystemProvider : IStorageProvider
     {
 
         private string baseDir;
-        public FileSystemProvider(string baseDirectory=null)
+        public FileSystemProvider(string baseDirectory = null)
         {
             baseDir = baseDirectory;
         }
@@ -24,7 +24,7 @@ namespace AzureStorageService.Service.Implementation
         }
         public async Task<bool> FileExists(string fileName)
         {
-            return  File.Exists(MapPath(fileName));
+            return File.Exists(MapPath(fileName));
         }
         public async Task<bool> AddFile(string fileName, string name, bool overrideIfExists = false)
         {
@@ -62,15 +62,15 @@ namespace AzureStorageService.Service.Implementation
         }
         public async Task<bool> AddFile(byte[] bytes, string name, bool overrideIfExists = false)
         {
-           
+
             try
             {
                 if (File.Exists(MapPath(name)) && !overrideIfExists) return true; //if file exist and not set to override return success
                 var path = new FileInfo(MapPath(name));
                 path.Directory.Create();
-                using (var fileStream =path.Open(FileMode.Create))
+                using (var fileStream = path.Open(FileMode.Create))
                 {
-                  await  fileStream.WriteAsync(bytes,0,bytes.Length-1);
+                    await fileStream.WriteAsync(bytes, 0, bytes.Length - 1);
                 }
             }
             catch
@@ -100,7 +100,7 @@ namespace AzureStorageService.Service.Implementation
 
         public async Task<bool> DownloadToFile(string filename, string outputFileName, bool overrideIfExists = false)
         {
-           
+
             try
             {
                 if (!await FileExists(filename)) return false;
@@ -115,7 +115,7 @@ namespace AzureStorageService.Service.Implementation
 
         public async Task DownloadStream(Stream stream, string name)
         {
-            var filestream = File.Open(MapPath(name), FileMode.Open,FileAccess.ReadWrite);
+            var filestream = File.Open(MapPath(name), FileMode.Open, FileAccess.ReadWrite);
             await filestream.CopyToAsync(stream);
             filestream.Dispose();
         }
@@ -125,7 +125,7 @@ namespace AzureStorageService.Service.Implementation
             return File.ReadAllBytes(MapPath(name));
 
         }
-        public async Task<bool> RenameFile(string originalName, string newName,bool overrideIfExists= false)
+        public async Task<bool> RenameFile(string originalName, string newName, bool overrideIfExists = false)
         {
             if (!await FileExists(originalName)) return false;
             if (!await FileExists(newName) && !overrideIfExists) return false;
@@ -143,8 +143,8 @@ namespace AzureStorageService.Service.Implementation
 
         public async Task<bool> UpdateFile(Stream stream, string name)
         {
-            if (! await FileExists(MapPath(name))) return false;
-           return await AddFile(stream, name, true);
+            if (!await FileExists(MapPath(name))) return false;
+            return await AddFile(stream, name, true);
         }
 
         public async Task<bool> UpdateFile(string fileName, string name)
@@ -160,14 +160,14 @@ namespace AzureStorageService.Service.Implementation
             if (!Directory.Exists(dirName)) return false;
 
             try
-                {
+            {
                 Directory.Delete(dirName, true);
                 return true;
-                }
-                catch
-                {
+            }
+            catch
+            {
                 return false;
-                }
+            }
         }
     }
 }

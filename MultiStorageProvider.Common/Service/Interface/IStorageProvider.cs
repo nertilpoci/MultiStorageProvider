@@ -1,13 +1,12 @@
-﻿using AzureStorageService.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureStorageService.Service.Interface
+namespace MultiStorageProvider.Common.Service.Interface
 {
-    interface IStorageProvider
+    public interface IStorageProvider
     {
         Task<bool> DeleteFolder(string name);
         Task<bool> AddFile(byte[] bytes, string name, bool overrideIfExists = false);
@@ -21,7 +20,6 @@ namespace AzureStorageService.Service.Interface
         Task<bool> RenameFile(string originalName, string newName, bool overrideIfExists = false);
         Task<bool> UpdateFile(Stream stream, string name);
         Task<bool> UpdateFile(string fileName, string name);
-
 
     }
 }

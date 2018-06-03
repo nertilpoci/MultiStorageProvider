@@ -1,8 +1,8 @@
-﻿using AzureStorageService.Helpers;
-using AzureStorageService.Models;
-using AzureStorageService.Service.Interface;
+﻿
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.File;
+using MultiStorageProvider.Common.Helpers;
+using MultiStorageProvider.Common.Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureStorageService.Service.Implementation
+namespace MultiStorageProvider.Service.Implementation
 {
     public class FileShareProvider : IStorageProvider
     {

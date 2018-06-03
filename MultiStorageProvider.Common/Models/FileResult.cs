@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AzureStorageService.Models
+﻿namespace MultiStorageProvider.Common.Models
 {
     public class FileResult
     {

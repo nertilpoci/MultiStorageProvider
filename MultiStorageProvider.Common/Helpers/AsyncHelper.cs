@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AzureStorageService.Helpers
+namespace MultiStorageProvider.Common.Helpers
 {
     public static class AsyncHelper
     {
