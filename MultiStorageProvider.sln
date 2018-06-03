@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26823.1
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureStorageService.Test", "AzureStorageService.Test\AzureStorageService.Test.csproj", "{1E8FFCE3-C44C-455F-9491-4BEC88563A44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiStorageProvider.Test", "AzureStorageService.Test\MultiStorageProvider.Test.csproj", "{1E8FFCE3-C44C-455F-9491-4BEC88563A44}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiStorageProvider.Common", "MultiStorageProvider.Common\MultiStorageProvider.Common.csproj", "{F3B652B8-8CC3-4A60-88E6-236010EB4DB0}"
 EndProject
