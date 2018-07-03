@@ -53,19 +53,7 @@ namespace MultiStorageProvider.GoogleDrive.Service.Implementation
                 return false;
             }
         }
-        private string GetMimeType(string fileName="")
-        {
-            string mimeType = "application/unknown";
-
-            return mimeType;
-        }
-        private Google.Apis.Drive.v3.Data.File CreateBody(string name)
-        {
-            Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File();
-            body.Name = Path.GetFileName(name);
-            body.Description = "File uploaded by MultiStoragerovider";
-            return body;
-        }
+       
         public async Task<bool> AddFile(string fileName, string name, bool overrideIfExists = false)
         {
             if (System.IO.File.Exists(fileName))
@@ -79,34 +67,66 @@ namespace MultiStorageProvider.GoogleDrive.Service.Implementation
             }
         }
 
-        public Task<bool> DeleteFile(string name)
+        public async Task<bool> DeleteFile(string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                FilesResource.DeleteRequest DeleteRequest = service.Files.Delete(name);
+                await DeleteRequest.ExecuteAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public Task<bool> DeleteFolder(string name)
         {
             throw new NotImplementedException();
         }
+       
 
-        public Task<byte[]> DownloadBytes(string name)
+        public async Task<byte[]> DownloadBytes(string name)
         {
-            throw new NotImplementedException();
+            return await service.HttpClient.GetByteArrayAsync(name);
         }
 
-        public Task DownloadStream(Stream stream, string name)
+        public async Task DownloadStream(Stream stream, string name)
         {
-            throw new NotImplementedException();
+            stream = await service.HttpClient.GetStreamAsync(name);
         }
 
-        public Task<bool> DownloadToFile(string blobName, string outputFileName, bool overrideIfExists = false)
+        public async Task<bool> DownloadToFile(string blobName, string outputFileName, bool overrideIfExists = false)
         {
-            throw new NotImplementedException();
+            if (!overrideIfExists && System.IO.File.Exists(outputFileName)) return false;
+
+            try
+            {
+                System.IO.File.WriteAllBytes(outputFileName, await DownloadBytes(blobName));
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
-        public Task<bool> FileExists(string fileName)
+        public async Task<bool> FileExists(string fileName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var file = await service.Files.Get(fileName).ExecuteAsync();
+                return file != null;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+           
         }
 
         public Task<bool> RenameFile(string originalName, string newName, bool overrideIfExists = false)
@@ -114,14 +134,38 @@ namespace MultiStorageProvider.GoogleDrive.Service.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateFile(Stream stream, string name)
+    
+        public async Task<bool> UpdateFile(byte[] bytes, string name)
         {
-            throw new NotImplementedException();
+            return await UpdateFile(new MemoryStream(bytes), name);
         }
 
-        public Task<bool> UpdateFile(string fileName, string name)
+        public async Task<bool> UpdateFile(Stream stream, string name)
         {
-            throw new NotImplementedException();
+            var body = CreateBody(name);
+            try
+            {
+                var request = service.Files.Update(body,name, stream, GetMimeType(name));
+                await request.UploadAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateFile(string fileName, string name)
+        {
+            if (System.IO.File.Exists(fileName))
+            {
+                byte[] byteArray = System.IO.File.ReadAllBytes(fileName);
+                return await UpdateFile(byteArray, name);
+            }
+            else
+            {
+                return false;
+            }
         }
         public async Task<IEnumerable<Google.Apis.Drive.v3.Data.File>> ListFles()
         {
@@ -163,6 +207,19 @@ namespace MultiStorageProvider.GoogleDrive.Service.Implementation
                 Console.WriteLine(ex.Message);
             }
             return Files;
+        }
+        private string GetMimeType(string fileName = "")
+        {
+            string mimeType = "application/unknown";
+
+            return mimeType;
+        }
+        private Google.Apis.Drive.v3.Data.File CreateBody(string name)
+        {
+            Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File();
+            body.Name = Path.GetFileName(name);
+            body.Description = "File uploaded by MultiStoragerovider";
+            return body;
         }
     }
 }
