@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiStorageProvider.Azure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiStorageProvider.LocalFileSystem", "MultiStorageProvider.LocalFileSystem\MultiStorageProvider.LocalFileSystem.csproj", "{5E657C6F-59EA-4409-B870-E5FE9F20006B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiStorageProvider.GoogleDrive", "MultiStorageProvider.GoogleDrive\MultiStorageProvider.GoogleDrive.csproj", "{FC15ACCC-ABD5-4398-BBAA-271A7F552643}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiStorageProvider.GoogleDrive", "MultiStorageProvider.GoogleDrive\MultiStorageProvider.GoogleDrive.csproj", "{FC15ACCC-ABD5-4398-BBAA-271A7F552643}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiStorageProvider.DropBox", "MultiStorageProvider.DropBox\MultiStorageProvider.DropBox.csproj", "{FE1D3CB7-AF27-45D7-84B2-D20202509795}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{FC15ACCC-ABD5-4398-BBAA-271A7F552643}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC15ACCC-ABD5-4398-BBAA-271A7F552643}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC15ACCC-ABD5-4398-BBAA-271A7F552643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE1D3CB7-AF27-45D7-84B2-D20202509795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE1D3CB7-AF27-45D7-84B2-D20202509795}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE1D3CB7-AF27-45D7-84B2-D20202509795}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE1D3CB7-AF27-45D7-84B2-D20202509795}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
