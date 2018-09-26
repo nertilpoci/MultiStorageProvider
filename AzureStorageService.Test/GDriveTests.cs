@@ -15,13 +15,20 @@ namespace MultiStorageProvider.Test
     [TestClass]
     public class GDriveTest
     {
-      
-
 
         [TestMethod]
-        public async Task AddBytesTest()
+        public async Task Get()
         {
+            var files = await new GoogleDriveProvider().AddFile(@"C:\Users\nertil\Source\Repos\AzureStorageService\README.md", "readmefile");
+
+        }
+
+        [TestMethod]
+        public async Task List()
+        {
+        //    var folder = await new GoogleDriveProvider().CreateFolder("testfolder");
             var files = await new GoogleDriveProvider().ListFles();
+            var file = await new GoogleDriveProvider().DownloadBytes("");
 
         }
         

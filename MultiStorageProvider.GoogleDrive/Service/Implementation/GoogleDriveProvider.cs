@@ -15,6 +15,7 @@ namespace MultiStorageProvider.GoogleDrive.Service.Implementation
     public class GoogleDriveProvider : IStorageProvider
     {
         DriveService service;
+        private string _parentId;
         public GoogleDriveProvider()
         {
             string[] scopes = new string[] { DriveService.Scope.Drive };
@@ -31,7 +32,6 @@ namespace MultiStorageProvider.GoogleDrive.Service.Implementation
                 HttpClientInitializer = credential,
                 ApplicationName = "Storage",
             });
-
         }
 
         public async Task<bool> AddFile(byte[] bytes, string name, bool overrideIfExists = false)
@@ -44,8 +44,9 @@ namespace MultiStorageProvider.GoogleDrive.Service.Implementation
             var body = CreateBody(name);
             try
             {
+                var id = service.Files.GenerateIds().Execute();
                 var request = service.Files.Create(body, stream, GetMimeType(name));
-                await request.UploadAsync();
+                var result=await request.UploadAsync();
                 return true;
             }
             catch (Exception e)
@@ -90,6 +91,7 @@ namespace MultiStorageProvider.GoogleDrive.Service.Implementation
 
         public async Task<byte[]> DownloadBytes(string name)
         {
+
             return await service.HttpClient.GetByteArrayAsync(name);
         }
 
@@ -216,10 +218,25 @@ namespace MultiStorageProvider.GoogleDrive.Service.Implementation
         }
         private Google.Apis.Drive.v3.Data.File CreateBody(string name)
         {
+
             Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File();
             body.Name = Path.GetFileName(name);
+            body.Id = "1HHixJuQHl0dAWt0TKxhLz1_hhJ5usO-c";
             body.Description = "File uploaded by MultiStoragerovider";
             return body;
+        }
+
+         public async Task<Google.Apis.Drive.v3.Data.File> CreateFolder(string name)
+        {
+
+            Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File();
+            body.Name=  "testfolder";
+            body.Description = "document description";
+            body.MimeType = "application/vnd.google-apps.folder";
+
+            // service is an authorized Drive API service instance
+           var result=await service.Files.Create(body).ExecuteAsync();
+            return result;
         }
     }
 }
